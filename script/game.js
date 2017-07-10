@@ -78,11 +78,7 @@ var rotate = function(type, angle){
 	return wire;
 }
 
-<<<<<<< HEAD
 var set_color = function(type, angle, i, j){
-=======
-var set_color = function(type, angle){
->>>>>>> 418c5de5f615072dc13c273f9aff9e9964059a5c
 	let img;
 	switch(type){
 		case(img_types[0]): img = "u_line.png"; break;
@@ -99,11 +95,7 @@ var check_up = function(){
 	let is_end = false;
 	let is_ok = false;
 	let moves_ = [[-1, 0], [0, 1], [1, 0], [0, -1]];
-<<<<<<< HEAD
 	set_color(board[i][j].type, board[i][j].angle, i, j);
-=======
-	set_color(board[i][j].type, board[i][j].angle);
->>>>>>> 418c5de5f615072dc13c273f9aff9e9964059a5c
 	let moves = rotate(board[i][j].type, board[i][j].angle);
 	if(moves[0]){
 		from = 0;
@@ -117,11 +109,7 @@ var check_up = function(){
 			if(moves[k] > 0 && moves[k] == moves[from] && k != from && next_moves[(k + 2) % next_moves.length] > 0){
 				i += moves_[k][0];
 				j += moves_[k][1];
-<<<<<<< HEAD
 				set_color(board[i][j].type, board[i][j].angle, i, j);
-=======
-				set_color(board[i][j].type, board[i][j].angle);
->>>>>>> 418c5de5f615072dc13c273f9aff9e9964059a5c
 				from = (k + 2) % 4;
 				moves = rotate(board[i][j].type, board[i][j].angle);
 				if(i == size - 1 && moves[2] && moves[2] == moves[from]) is_end = true;
