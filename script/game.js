@@ -1,6 +1,6 @@
 
 var size = 8;
-var img_types = ["straight.png", "angle.png", "v_sect.png", "empty.png"];
+var img_types = ["u_line.png", "u_ang.png", "u_sect.png", "empty.png"];
 var angles = [0, 90, 180, 360];
 
 var types = [[0, 1, 0, 1], [0, 0, 1, 1], [1, 2, 1, 2], [0, 0, 0, 0]]; // top, right, bottom, left in each array
@@ -81,9 +81,9 @@ var rotate = function(type, angle){
 var set_color = function(type, angle, i, j){
 	let img;
 	switch(type){
-		case(img_types[0]): img = "u_line.png"; break;
-		case(img_types[1]): img = "u_ang.png"; break;
-		case(img_types[2]): img = "u_sect.png"; break;
+		case(img_types[0]): img = "v_line.png"; break;
+		case(img_types[1]): img = "v_ang.png"; break;
+		case(img_types[2]): img = "v_sect.png"; break;
 	}
 	let table_cell = $(".cell:eq(" +  (size * i + j) + ")");
 	table_cell.css("background-image", "url(\"img/" + img + "\")");
@@ -94,12 +94,11 @@ var check_up = function(){
 	let i = 0; let j = 0;
 	let is_end = false;
 	let is_ok = false;
+	let from = 0;
+	let moves = rotate(board[i][j].type, board[i][j].angle);
+	if(!moves[0]) return false;
 	let moves_ = [[-1, 0], [0, 1], [1, 0], [0, -1]];
 	set_color(board[i][j].type, board[i][j].angle, i, j);
-	let moves = rotate(board[i][j].type, board[i][j].angle);
-	if(moves[0]){
-		from = 0;
-	} else return false;
 	while(!is_end){
 		moves = rotate(board[i][j].type, board[i][j].angle);
 		for(let k = 0; k < 4; k++){
@@ -112,7 +111,7 @@ var check_up = function(){
 				set_color(board[i][j].type, board[i][j].angle, i, j);
 				from = (k + 2) % 4;
 				moves = rotate(board[i][j].type, board[i][j].angle);
-				if(i == size - 1 && moves[2] && moves[2] == moves[from]) is_end = true;
+				if(i == size - 1 && j == size - 1 && moves[2] && moves[2] == moves[from]) is_end = true;
 				is_ok = true;
 				break;
 			}
