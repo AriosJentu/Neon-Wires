@@ -32,6 +32,26 @@ for(let i = 0; i < size; i++){
 	}
 }
 
+// Generation by seed
+
+var seed_t = "0011010222112210102112020121011110010";
+var seed_m = "dddruurrrrrdlllddrrrdlllllddrrdrurrrd";
+
+{
+	let i = 0;
+	let j = 0;
+	board[i][j].type = img_types[parseInt(seed_t[0], 10)];
+	for(let k = 1; k < seed_t.length; k++){
+		switch(seed_m[k]){
+			case("u"): i--; break;
+			case("r"): j++; break;
+			case("d"): i++; break;
+			case("l"): j--; break;
+		}
+		board[i][j].type = img_types[parseInt(seed_t[k], 10)];
+	}
+}
+
 // Interface functions //
 
 $("button").click(function(){
@@ -39,6 +59,7 @@ $("button").click(function(){
 	message = check_up() ? "You won" : "Something is wrong";
 	setTimeout(function(){
 		alert(message);
+		draw();
 	}, 200);
 });
 
