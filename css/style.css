@@ -2,6 +2,18 @@ table {
 	table-layout: fixed;
 	border-spacing: 0px;
 	background-position: center;
+	margin: 50px;
+	margin-left: 30%;
+}
+
+button {
+	margin-left: 45%;
+	position: relative;
+	width: 100px;
+	height: 50px;
+	border: none;
+	background-color: black;
+	color: white;
 }
 
 .cell{
