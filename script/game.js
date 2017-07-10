@@ -66,6 +66,7 @@ $(".cell").click(function(){
 var check_up = function(){
 	let i = 0; let j = 0;
 	let is_end = false;
+	let is_ok = false;
 	let from = [1, 0, 0, 0];
 	let moves_ = [[-1, 0], [0, 1], [1, 0], [0, -1]];
 	let table_cell = $(".cell:eq(" +  (size * i + j) + ")");
@@ -98,9 +99,14 @@ var check_up = function(){
 				from[(k + 2) % moves.length] = 1;
 				console.log("from " + from);
 				if(i == size - 1) is_end = true;
+				is_ok = true;
 				break;
 			}
+			else{
+				is_ok = false;
+			}
 		}
+		if(!is_ok) return;
 	}
 }
 
