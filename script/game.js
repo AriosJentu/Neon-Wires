@@ -12,10 +12,10 @@ var random = function (min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
 }
 
-var img_types = ["straight.png", "angle.png", "empty.png"];
+var img_types = ["straight.png", "angle.png", "v_sect.png", "empty.png"];
 var angles = [0, 90, 180, 360];
 
-var types = [[0, 1, 0, 1], [0, 0, 1, 1], [0, 0, 0, 0]];
+var types = [[0, 1, 0, 1], [0, 0, 1, 1], [1, 2, 1, 2], [0, 0, 0, 0]];
 
 var draw = function(){
 	for(let i = 0; i < size; i++){
@@ -49,7 +49,7 @@ var board = [];
 for(let i = 0; i < size; i++){
 	board[i] = [];
 	for(let j = 0; j < size; j++){
-		board[i][j] = new cell(img_types[random(0, 2)], angles[random(0, 4)]);
+		board[i][j] = new cell(img_types[random(0, img_types.length - 1)], angles[random(0, angles.length)]);
 	}
 }
 
@@ -59,7 +59,6 @@ $(".cell").click(function(){
 	let index = $(".cell").index(this);
 	board[Math.floor(index / size)][index % size].angle += 90;
 	let peace = board[Math.floor(index / size)][index % size];
-	console.log(rotate(peace.type, peace.angle));
 	draw();
 });
 
@@ -67,38 +66,46 @@ var check_up = function(){
 	let i = 0; let j = 0;
 	let is_end = false;
 	let is_ok = false;
-	let from = [1, 0, 0, 0];
+	let img = "";
 	let moves_ = [[-1, 0], [0, 1], [1, 0], [0, -1]];
 	let table_cell = $(".cell:eq(" +  (size * i + j) + ")");
-	let img = board[i][j].type == img_types[0] ? "u_line.png" : "u_ang.png";
+	switch(board[i][j].type){
+		case(img_types[0]): img = "u_line.png"; break;
+		case(img_types[1]): img = "u_ang.png"; break;
+		case(img_types[2]): img = "u_sect.png"; break;
+	}
 	table_cell.css("background-image", "url(\"img/" + img + "\")");
 	table_cell.css("transform", "rotate(" + board[i][j].angle + "deg)");
+	let moves = rotate(board[i][j].type, board[i][j].angle);
+		if(moves[0]){
+			from = 0;
+		} else return false;
 	while(!is_end){
-		let moves = rotate(board[i][j].type, board[i][j].angle);
+		moves = rotate(board[i][j].type, board[i][j].angle);
 		console.log(moves);
 		for(let k = 0; k < 4; k++){
 			if(i + moves_[k][0] < 0 || j + moves_[k][1] < 0 || i + moves_[k][0] > size - 1 || j + moves_[k][1] > size - 1) continue;
 			let next = board[i + moves_[k][0]][j + moves_[k][1]];
 			let next_moves = rotate(next.type, next.angle);
 			console.log("Next " + k + " " + next_moves);
-			console.log(next_moves[(k + 2) % next_moves.length] == 1);
-			if(moves[k] == 1 && from[k] != 1 && next_moves[(k + 2) % next_moves.length] == 1){
-				from.fill(0);
-				switch(k){
-					case(0): i--; break;
-					case(1): j++; break;
-					case(2): i++; break;
-					case(3): j--; break;
-				}
-				console.log(i + ' ' + j);				
-				if(i < 0 || j < 0) return false;
+			console.log(next_moves[(k + 2) % next_moves.length] > 0);
+			console.log(from);
+			if(moves[k] > 0 && moves[k] == moves[from] && k != from && next_moves[(k + 2) % next_moves.length] > 0){
+				i += moves_[k][0];
+				j += moves_[k][1];
+				console.log(i + " " + j);				
+				let img = "";
 				let table_cell = $(".cell:eq(" +  (size * i + j) + ")");
-				let img = board[i][j].type == img_types[0] ? "u_line.png" : "u_ang.png";
+				switch(board[i][j].type){
+					case(img_types[0]): img = "u_line.png"; break;
+					case(img_types[1]): img = "u_ang.png"; break;
+					case(img_types[2]): img = "u_sect.png"; break;
+				}
 				table_cell.css("background-image", "url(\"img/" + img + "\")");
 				table_cell.css("transform", "rotate(" + board[i][j].angle + "deg)");
-				from[(k + 2) % moves.length] = 1;
-				console.log("from " + from);
-				if(i == size - 1) is_end = true;
+				from = (k + 2) % 4;
+				moves = rotate(board[i][j].type, board[i][j].angle);
+				if(i == size - 1 && moves[2] && moves[2] == moves[from]) is_end = true;
 				is_ok = true;
 				break;
 			}
@@ -108,10 +115,15 @@ var check_up = function(){
 		}
 		if(!is_ok) return;
 	}
+	return is_end;
 }
 
 $("button").click(function(){
-	check_up();
+	let message = "";
+	message = check_up() ? "You won" : "Something is wrong";
+	setTimeout(function(){
+		alert(message);
+	}, 200);
 });
 
 console.log("I'm still alive");
