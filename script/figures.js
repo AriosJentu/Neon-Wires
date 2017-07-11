@@ -40,11 +40,16 @@ Figure.prototype.rotate = function(rot_id=-1) {
 	this.rotation_id = (rot_id)%(this.type.rotates)
 
 
-	let wire = this.type.bridge
+	let wire = []
+	for (i of this.type.bridge) {
+		wire.push(i)
+	}
+
 	for (let i = 0; i < this.rotation_id; i++) {
 	
 		let side = wire.pop()
 		wire.unshift(side)
+
 	}
 
 	return wire
