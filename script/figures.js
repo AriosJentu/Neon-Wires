@@ -28,6 +28,7 @@ var Figure = function(type=Figures.line) {
 	this.type = type
 	this.image = type.unvisited
 	this.rotation_id = 0
+	this.is_visited = false
 
 }
 
@@ -55,21 +56,23 @@ Figure.prototype.rotate = function(rot_id=-1) {
 	return wire
 }
 
-Figure.prototype.set_visited = function(b_visited, b_type="top") { //"top", "bot", "bth"
+Figure.prototype.set_visited = function(b_visited, type="top") { //"top", "bot", "bth"
 
+	this.is_visited = b_visited
+	
 	if (!b_visited) {
 		
 		this.image = this.type.unvisited
 
 	} else {
 
-		if (this.type != Figures.cross || b_type == "bth") {
+		if (this.type != Figures.cross || type == "bth") {
 
 			this.image = this.type.visited
 		
-		} else if (b_type == "top") {
+		} else {
 
-			this.image = this.type[b_type]
+			this.image = this.type[type]
 		}
 	}
 
