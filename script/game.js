@@ -71,19 +71,16 @@ var seed_m = "dddruurrrrrdlllddrrrdlllllddrrdrurrrd";
 
 // Interface functions //
 
-$("button").click(function(){
-	let message = "";
-	message = check_up() ? "You won" : "Something is wrong";
-	setTimeout(function(){
-		alert(message);
-		draw();
-	}, 200);
-});
-
 $(".cell").click(function(){ // Graphic's rotate. Also changes rotation angle for future things
 	let index = $(".cell").index(this);
 	board[Math.floor(index / size)][index % size].angle += 90;
-	draw();
+	draw();	
+	if(check_up()){
+		setTimeout(function(){
+			alert("You won");
+			return;
+		}, 200);
+	}
 });
 
 var draw = function(){
