@@ -3,23 +3,33 @@ Board.width = 8
 Board.height = 8
 Board.array = []
 
+
+var random = function (min, max) {
+  return Math.floor(Math.random() * (max - min)) + min
+}
+
 Board.generate = function(width=Board.width, height=Board.height) {
 
 	Board.width = width
 	Board.height = height
 
-	for (let y = 0; y < Board.height+2; y++) {
-		$("#game_board").append('<tr id="'+(y-1)+'">')
+	for (let y = 0; y < Board.height + 2; y++) {
+		let obj_class = 'class="border"'
+		if (y-1 >= 0 && y-1 < Board.height) {
+			obj_class = ""
+		}
+
+		$("#game_board").append('<tr id="'+(y-1)+'" ' + obj_class + '>')
 	}
 
 	for (let x = 0; x < Board.width + 2; x++) {
 
-		let obj_class = 'class="board"'
+		let obj_class = 'class="border"'
 		if (x-1 >= 0 && x-1 < Board.width) {
 			obj_class = 'class="cell"'
 		}
 
-		let str = '<td id="'+(x-1)+'" ' +obj_class+ ' />'
+		let str = '<td id="'+(x-1)+'" ' + obj_class + ' />'
 		$("tr").append(str)
 	}
 
@@ -32,7 +42,11 @@ Board.generate = function(width=Board.width, height=Board.height) {
 		for (let y = 0; y < Board.height; y++) {
 
 			//SSID Generator
-			if (x === y) {
+
+			let Rand = [Figures.angle, Figures.line, Figures.cross]
+			Board.array[x][y] = new Figure(Rand[random(0, Rand.length)])
+
+			/*if (x === y) {
 
 				Board.array[x][y] = new Figure(Figures.angle)
 
@@ -43,7 +57,7 @@ Board.generate = function(width=Board.width, height=Board.height) {
 			} else {
 
 				Board.array[x][y] = new Figure(Figures.cross)
-			}
+			}*/
 		}
 	}
 }
@@ -69,3 +83,70 @@ Board.onclick = function(x=0, y=0) {
 	Board.array[x][y].rotate()
 }
 
+Board.is_solved = function() {
+
+	let i = 0
+	let j = 0
+
+	let is_end = false
+	let from = 0
+
+	let figure = Board.array[i][j]
+	let bridge = figure.rotate(figure.rotation_id)
+
+	if (!bridge[0]) {
+		return false
+	} 
+
+	let ways = [[-1, 0], [0, 1], [1, 0], [0, -1]]
+
+	figure.set_visited(true)
+
+	while (!is_end) {
+
+		let is_valid = false
+
+		figure = Board.array[i][j]
+		bridge = figure.rotate(figure.rotation_id)
+		
+		for (let k = 0; k < ways.length; k++) {
+
+			let index_x = i + ways[k][0]
+			let index_y = j + ways[k][1]
+
+			if (index_x < 0 || index_y < 0 ) {
+				continue 
+			}
+			if (index_x > Board.height - 1 || index_y > Board.width - 1) {
+				continue
+			}
+
+			let next_figure = Board.array[index_x][index_y]
+			let next_bridge = next_figure.rotate(next_figure.rotation_id)
+			if (bridge[k] > 0 && bridge[k] == bridge[from] && k != from && next_bridge[(k+2) % next_bridge.length] > 0) {
+
+				i += ways[k][0]
+				j += ways[k][1]
+
+				figure = Board.array[i][j]
+				figure.set_visited(true)
+
+				from = (k + 2) % ways.length
+				bridge = figure.rotate(figure.rotation_id)
+
+				if (i == Board.height - 1 && j == Board.width - 1 && bridge[2] && bridge[2] == bridge[from]) {
+					
+					is_end = true
+				}
+
+				is_valid = true
+				break
+			}
+		}
+		if (!is_valid){
+			return false
+		}
+	}
+
+	return true
+}
