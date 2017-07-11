@@ -2,9 +2,11 @@ table {
 	table-layout: fixed;
 	border-spacing: 0px;
 	background-position: center;
+	margin: 50px;
+	margin-left: 30%;
 }
 
-.cell{
+td{
 	width: 62px;
 	height: 63px;
 	border: 1px solid;
@@ -14,9 +16,3 @@ table {
 	background-color: lightgray;
 }
 
-.straight{
-	background-image: url("../img/straight.png");
-}
-#game_board{
-
-}
