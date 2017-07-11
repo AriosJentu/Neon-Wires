@@ -1,7 +1,13 @@
-.cell{
+.cell {
 	width: 50px;
 	height: 50px;
 	border: 2px solid;
+}
+.board {
+	width: 50px;
+	height: 50px;
+	border: 2px solid;
+	background-color: #143F72;
 }
 
 #game_board{
