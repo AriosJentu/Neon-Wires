@@ -1,11 +1,20 @@
+table {
+    border-collapse: collapse;
+    border-spacing: 0px;
+    position: relative;
+    left: 25%;
+}
+
 .cell {
-	width: 50px;
-	height: 50px;
-	border: 2px solid;
+	width: 60px;
+	height: 60px;
+	border: 0px solid;
+	background-position: center;
 }
 .border {
-	width: 50px;
-	height: 50px;
-	border: 2px solid;
+	width: 60px;
+	height: 60px;
+	border: 0px solid;
 	background-color: #143F72;
 }
+
