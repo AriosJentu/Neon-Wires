@@ -10,6 +10,9 @@ var random = function (min, max) {
 
 Board.generate = function(width=Board.width, height=Board.height) {
 
+	let seed_figures = "0011010222112210102112020121011110010";
+	let seed_ways = "2221001111123332211123333322112101112";
+	
 	Board.width = width
 	Board.height = height
 
@@ -34,6 +37,8 @@ Board.generate = function(width=Board.width, height=Board.height) {
 	}
 
 	Board.array = []
+	
+	let figures = [Figures.line, Figures.angle, Figures.cross]
 
 	for (let x = 0; x < Board.width; x++) {
 		
@@ -43,22 +48,24 @@ Board.generate = function(width=Board.width, height=Board.height) {
 
 			//SSID Generator
 
-			let Rand = [Figures.angle, Figures.line, Figures.cross]
-			Board.array[x][y] = new Figure(Rand[random(0, Rand.length)])
+			Board.array[x][y] = new Figure(figures[random(0, figures.length)])
+			Board.array[x][y].rotation_id = random(0, 4)
 
-			/*if (x === y) {
-
-				Board.array[x][y] = new Figure(Figures.angle)
-
-			} else if (x-1 === y) {
-				
-				Board.array[x][y] = new Figure(Figures.line)
-
-			} else {
-
-				Board.array[x][y] = new Figure(Figures.cross)
-			}*/
 		}
+	}
+
+	let ways = [[-1, 0], [0, 1], [1, 0], [0, -1]]
+
+	let i = -1
+	let j = 0
+
+	for (let k = 0; k < seed_ways.length; k++) {
+
+		i += ways[seed_ways[k]*1][0]
+		j += ways[seed_ways[k]*1][1]
+		Board.array[i][j] = new Figure(figures[seed_figures[k]])
+		Board.array[i][j].rotation_id = random(0, 4)
+
 	}
 }
 
