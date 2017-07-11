@@ -1,27 +1,11 @@
-table {
-	table-layout: fixed;
-	border-spacing: 0px;
-	background-position: center;
-	margin: 50px;
-	margin-left: 30%;
-}
-
-button {
-	margin-left: 45%;
-	position: relative;
-	width: 100px;
+.cell {
+	width: 50px;
 	height: 50px;
-	border: none;
-	background-color: black;
-	color: white;
+	border: 2px solid;
 }
-
-td{
-	width: 62px;
-	height: 63px;
-	border: 1px solid;
-	background-position: center;
-	background-size: 64px;
-	background-repeat: no-repeat;
-	background-color: lightgray;
+.border {
+	width: 50px;
+	height: 50px;
+	border: 2px solid;
+	background-color: #143F72;
 }

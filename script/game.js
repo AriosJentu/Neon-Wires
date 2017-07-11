@@ -16,13 +16,30 @@ var cell = function(type, angle){
 
 // Creating board //
 
-for(let i = 0; i < size; i++){
+for(let i = 0; i < size + 2; i++){
 	$("#game_board").append("<tr>");
 }
 
-for(let j = 0; j < size; j++){
+for(let j = 0; j < size + 2; j++){
 	$("tr").append("<td class = \"cell\">");
 }
+
+for(let i = 0; i < size + 2; i++){
+	$("td:eq(" + i + ")").attr("class", "board");
+	$("td:eq(" + i * (size + 2) + ")").attr("class", "board");
+	$("td:eq(" + ((size + 1) * (size + 2) + i) +")").attr("class", "board");
+	$("td:eq(" + (i * (size + 2) + size + 1) + ")").attr("class", "board");
+
+}
+
+{
+$("td.board").css("background-color", "#71949a");
+$("td:eq(" + 1 + ")").css("background-image", "url(\"img/" + "v_line.png" + "\")");
+$("td:eq(" + ((size + 2) * (size + 2) - 2) + ")").css("background-image", "url(\"img/" + img_types[0] + "\")");
+$("td:eq(" + 1 + ")").css("transform", "rotate(90deg)");
+$("td:eq(" + ((size + 2) * (size + 2) - 2) + ")").css("transform", "rotate(90deg)");
+}
+
 
 var board = [];
 for(let i = 0; i < size; i++){
