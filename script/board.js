@@ -11,12 +11,12 @@ var random = function (min, max) {
 Board.generate = function(width=Board.width, height=Board.height) {
 
 	let seed_figures = "0011010222112210102112020121011110010";
-	let seed_ways = "2221001111123332211123333322112101112";
+	let seed_ways    = "2221001111123332211123333322112101112";
 	
 	Board.width = width
 	Board.height = height
 
-	for (let y = 0; y < Board.height + 2; y++) {
+	for (let y = 0; y < height + 2; y++) {
 		let obj_class = 'class="border"'
 		if (y-1 >= 0 && y-1 < Board.height) {
 			obj_class = ""
@@ -25,7 +25,7 @@ Board.generate = function(width=Board.width, height=Board.height) {
 		$("#game_board").append('<tr id="'+(y-1)+'" ' + obj_class + '>')
 	}
 
-	for (let x = 0; x < Board.width + 2; x++) {
+	for (let x = 0; x < width + 2; x++) {
 
 		let obj_class = 'class="border"'
 		if (x-1 >= 0 && x-1 < Board.width) {
@@ -40,16 +40,17 @@ Board.generate = function(width=Board.width, height=Board.height) {
 	
 	let figures = [Figures.line, Figures.angle, Figures.cross]
 
-	for (let x = 0; x < Board.width; x++) {
+	for (let x = 0; x < width; x++) {
 		
 		Board.array[x] = []
 
-		for (let y = 0; y < Board.height; y++) {
+		for (let y = 0; y < height; y++) {
 
 			//SSID Generator
 
-			Board.array[x][y] = new Figure(figures[random(0, figures.length)])
-			Board.array[x][y].rotation_id = random(0, 4)
+			let figure = figures[random(0, figures.length)]
+			Board.array[x][y] = new Figure(figure)
+			Board.array[x][y].rotation_id = random(0, figure.rotates)
 
 		}
 	}
@@ -63,8 +64,10 @@ Board.generate = function(width=Board.width, height=Board.height) {
 
 		i += ways[seed_ways[k]*1][0]
 		j += ways[seed_ways[k]*1][1]
-		Board.array[i][j] = new Figure(figures[seed_figures[k]])
-		Board.array[i][j].rotation_id = random(0, 4)
+
+		let figure = figures[seed_figures[k]]
+		Board.array[i][j] = new Figure(figure)
+		Board.array[i][j].rotation_id = random(0, figure.rotates)
 
 	}
 }
@@ -136,9 +139,22 @@ Board.is_solved = function() {
 				j += ways[k][1]
 
 				figure = Board.array[i][j]
-				figure.set_visited(true)
-
 				from = (k + 2) % ways.length
+
+				let type_figure = "bot"
+				if (figure.is_visited) {
+
+					type_figure = "bth"
+
+				} else if (
+					from == (1 + figure.rotation_id) % 4 || 
+					from == (3 + figure.rotation_id) % 4
+				) {
+
+					type_figure = "top"
+				}
+				figure.set_visited(true, type_figure)
+
 				bridge = figure.rotate(figure.rotation_id)
 
 				if (i == Board.height - 1 && j == Board.width - 1 && bridge[2] && bridge[2] == bridge[from]) {
