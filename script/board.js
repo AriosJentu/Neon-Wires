@@ -3,42 +3,14 @@ Board.width = 8
 Board.height = 8
 Board.array = []
 
-
-/*var seed = {
-
-	figures: "3110102221122101021120201210111103",
-	ways: 	 "2210011111233322111233333221121011",
-
-	start: [1, 0],
-	end: [6, 6]
-}
-*/
-
-var seed = {
-
-	figures: "311010222112210102112020121011110013",
-	ways: 	 "221001111123332211123333322112101112",
-
-	start: [1, 0],
-	end: [7, 7]
-}
-
-/*
-var seed = {
-
-	figures: "31112020112021211012111203",
-	ways: 	 "22101111103333221221123000",
-
-	start: [2, 1],
-	end: [3, 5]
-}*/
-
 var random = function (min, max) {
 	return Math.floor(Math.random() * (max - min)) + min
 }
 
 Board.generate = function(width = Board.width, height = Board.height) {
 	
+	let seed = seeds[current_seed]
+
 	Board.width = width
 	Board.height = height
 
@@ -68,7 +40,6 @@ Board.generate = function(width = Board.width, height = Board.height) {
 	corners[3] = 2 * height + width + 2
 
 	$(".border").each(function(index){
-		console.log(index, this)
 		let id_this = $(this).attr("id")
 		if(corners.indexOf(index) != -1){
 			$(this).attr("class", "border_corner")
@@ -82,7 +53,9 @@ Board.generate = function(width = Board.width, height = Board.height) {
 	})
 
 	Board.array = []
+
 	let figures = [Figures.line, Figures.corner, Figures.cross, Figures.node]
+	let ways = [[-1, 0], [0, 1], [1, 0], [0, -1]]
 
 	for (let x = 0; x < width; x++) {
 		Board.array[x] = []
@@ -93,7 +66,6 @@ Board.generate = function(width = Board.width, height = Board.height) {
 		}
 	}
 
-	let ways = [[-1, 0], [0, 1], [1, 0], [0, -1]]
 	let i = seed.start[0] - 1
 	let j = seed.start[1]
 
@@ -124,8 +96,8 @@ Board.onclick = function(x = 0, y = 0) {
 }
 
 Board.is_solved = function() {
-	let i = seed.start[0]
-	let j = seed.start[1]
+	let i = seeds[current_seed].start[0]
+	let j = seeds[current_seed].start[1]
 	let ways = [[-1, 0], [0, 1], [1, 0], [0, -1]]
 	let is_end = false
 	let figure = Board.array[i][j]
@@ -172,7 +144,7 @@ Board.is_solved = function() {
 				figure.set_activity(true, type_figure)
 				bridge = figure.rotate(figure.rotation_id)
 
-				if (i == seed.end[0] && j == seed.end[1]) {
+				if (i == seeds[current_seed].end[0] && j == seeds[current_seed].end[1]) {
 					is_end = true
 				}
 
