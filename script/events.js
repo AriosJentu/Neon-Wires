@@ -46,9 +46,6 @@ $("#button_level").click(function(){
 	is_end = false
 	current_seed++
 	$("#show_win").hide("slow")
-	Board.array = []
-	$("td").remove()
-	$("tr").remove()
 	Board.generate()
 	Board.is_solved()
 	Board.draw()
@@ -57,9 +54,6 @@ $("#button_level").click(function(){
 
 $("#button_restart").click(function(){
 	is_end = false
-	Board.array = []
-	$("td").remove()
-	$("tr").remove()
 	Board.generate()
 	Board.is_solved()
 	Board.draw()

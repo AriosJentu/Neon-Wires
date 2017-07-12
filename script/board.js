@@ -1,7 +1,6 @@
 var Board = {}
 Board.width = 8
 Board.height = 8
-Board.array = []
 
 var random = function (min, max) {
 	return Math.floor(Math.random() * (max - min)) + min
@@ -9,48 +8,12 @@ var random = function (min, max) {
 
 Board.generate = function(width = Board.width, height = Board.height) {
 	
-	let seed = seeds[current_seed]
-
 	Board.width = width
 	Board.height = height
 
-	for (let y = 0; y < height + 2; y++) {
-		$("#game_board").append('<tr id="'+(y-1)+'">')
+	if(!Table.is_initializated){
+		Table.initializate(width, height)
 	}
-
-	let corner_rotate = 0
-	let line_rotate = 0
-
-	for (let x = 0; x < width + 2; x++) {
-
-		$("tr").each(function(index, element){
-			let obj_class = "cell"
-			let obj_id = $(this).attr("id")
-			if(obj_id == -1 || obj_id == Board.height || x < 1 || x > width){
-				obj_class = "border"
-			}
-			$(this).append('<td id ="'+(x-1)+'"'+' class = "'+obj_class+'"/>')
-		})
-	}
-
-	let corners = []
-	corners[0] = 0
-	corners[1] = width + 1
-	corners[2] = 2 * height + 2 * width + 3
-	corners[3] = 2 * height + width + 2
-
-	$(".border").each(function(index){
-		let id_this = $(this).attr("id")
-		if(corners.indexOf(index) != -1){
-			$(this).attr("class", "border_corner")
-			$(this).css("transform", "rotate(" + 90 * corners.indexOf(index) + "deg)")
-		} else if(id_this > -1 && id_this < width){
-			let angle = index < width + 1 ? 90 : 270
-			$(this).css("transform", "rotate(" + angle + "deg)")
-		} else if(id_this == width){
-			$(this).css("transform", "rotate(180deg)")
-		} 
-	})
 
 	Board.array = []
 
@@ -66,6 +29,7 @@ Board.generate = function(width = Board.width, height = Board.height) {
 		}
 	}
 
+	let seed = seeds[current_seed]
 	let i = seed.start[0] - 1
 	let j = seed.start[1]
 
@@ -82,11 +46,7 @@ Board.generate = function(width = Board.width, height = Board.height) {
 Board.draw = function() {
 	for (let x = 0; x < Board.width; x++) {
 		for(let y = 0; y < Board.height; y++) {
-			let image = 'url("img/' + Board.array[x][y].image + '")'
-			let corner = "rotate(" + Board.array[x][y].rotation_id*90 + "deg)"
-			let cell = $(".cell:eq(" + (Board.width * x + y) + ")")
-			cell.css("background-image", image)
-			cell.css("transform", corner)
+			Table.draw(Board.width * x + y, Board.array[x][y].image, Board.array[x][y].rotation_id*90)
 		}
 	}
 }
