@@ -71,8 +71,7 @@ body {
 button {
 	width: 75%;
 	height: 10%;
-    margin-top: 75%;
-    margin-left: -8%;
+    
     font-size: 2em;
     color: orange;
     background-color: #0c141f;
@@ -80,6 +79,22 @@ button {
     
 }
 
+#button_level {
+	width: 50%;
+	height: 20%;
+    
+    font-size: 1em;
+    color: orange;
+    background-color: #0c141f;
+    border-color: orange;
+
+}
+
+.button {
+	margin-top: 75%;
+    margin-left: -8%;
+
+}
 #show_win {
 	display: none;	
 	border: 5px solid orange;
