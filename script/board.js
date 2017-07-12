@@ -33,24 +33,36 @@ Board.generate = function(width=Board.width, height=Board.height) {
 	Board.height = height
 
 	for (let y = 0; y < height + 2; y++) {
-		let obj_class = 'class="border"'
-		if (y-1 >= 0 && y-1 < Board.height) {
-			obj_class = ""
-		}
-
-		$("#game_board").append('<tr id="'+(y-1)+'" ' + obj_class + '>')
+		$("#game_board").append('<tr id="'+(y-1)+'">')
 	}
+
+	let corner_rotate = 0
+	let line_rotate = 0
 
 	for (let x = 0; x < width + 2; x++) {
 
-		let obj_class = 'class="border"'
-		if (x-1 >= 0 && x-1 < Board.width) {
-			obj_class = 'class="cell"'
-		}
-
-		let str = '<td id="'+(x-1)+'" ' + obj_class + ' />'
-		$("tr").append(str)
+		$("tr").each(function(index, element){
+			let obj_class = "cell"
+			let obj_id = $(this).attr("id")
+			if(obj_id == -1 || obj_id == Board.height || x < 1 || x > width){
+				obj_class = "border"
+			}
+			$(this).append('<td id ="'+(x-1)+'"'+' class = "'+obj_class+'"/>')
+		})
 	}
+
+	$(".border").each(function(index, element){
+		let angle = 0
+		if((index % (width + 1) || (index + 1) % (width + 1)) && (index < width + 2 || index > (height + 2) * (width + 1)))
+			angle += ++corner_rotate
+		$(element).css("transorm", "rotate(" + 90 * angle + "deg)")
+	})
+
+	/*$("td").each(function(_, element) {
+		if ($(element).attr("class") == "border") {
+
+		}
+	})*/
 
 	Board.array = []
 	
@@ -61,8 +73,6 @@ Board.generate = function(width=Board.width, height=Board.height) {
 		Board.array[x] = []
 
 		for (let y = 0; y < height; y++) {
-
-			//SSID Generator
 
 			let figure = figures[random(0, figures.length - 1)]
 			Board.array[x][y] = new Figure(figure)
@@ -96,7 +106,7 @@ Board.draw = function() {
 			let image = 'url("img/' + Board.array[x][y].image + '")'
 			let angle = "rotate(" + Board.array[x][y].rotation_id*90 + "deg)"
 
-			let cell = $(".cell:eq(" + (Board.width*(x+1) + y) + ")")
+			let cell = $(".cell:eq(" + (Board.width*(x) + y) + ")")
 
 			cell.css("background-image", image)
 			cell.css("transform", angle)

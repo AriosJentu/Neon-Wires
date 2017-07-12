@@ -4,7 +4,9 @@ table {
     position: relative;
     left: 25%;
     background-image: url("../img/back.png");
+
 }
+
 td, tr {
 	width: 60px;
 	height: 60px;
