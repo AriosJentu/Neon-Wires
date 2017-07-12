@@ -4,14 +4,30 @@ Board.height = 8
 Board.array = []
 
 
+/*	var seed = {
+
+		figures: "3011010222112210102112020121011110013",
+		ways: 	 "2221001111123332211123333322112101112",
+
+		start: [0, 0],
+		end: [7, 7]
+	}
+*/
+
+var seed = {
+
+	figures: "311010222112210102112020121011110013",
+	ways: 	 "221001111123332211123333322112101112",
+
+	start: [1, 0],
+	end: [7, 7]
+}
+
 var random = function (min, max) {
   return Math.floor(Math.random() * (max - min)) + min
 }
 
 Board.generate = function(width=Board.width, height=Board.height) {
-
-	let seed_figures = "3011010222112210102112020121011110013";
-	let seed_ways    = "2221001111123332211123333322112101112";
 	
 	Board.width = width
 	Board.height = height
@@ -57,15 +73,15 @@ Board.generate = function(width=Board.width, height=Board.height) {
 
 	let ways = [[-1, 0], [0, 1], [1, 0], [0, -1]]
 
-	let i = -1
-	let j = 0
+	let i = seed.start[0] - 1
+	let j = seed.start[1]
 
-	for (let k = 0; k < seed_ways.length; k++) {
+	for (let k = 0; k < seed.figures.length; k++) {
 
-		i += ways[seed_ways[k]*1][0]
-		j += ways[seed_ways[k]*1][1]
+		i += ways[seed.ways[k]*1][0]
+		j += ways[seed.ways[k]*1][1]
 
-		let figure = figures[seed_figures[k]]
+		let figure = figures[seed.figures[k]]
 		Board.array[i][j] = new Figure(figure)
 		Board.array[i][j].rotation_id = random(0, figure.rotates)
 
@@ -95,8 +111,8 @@ Board.onclick = function(x=0, y=0) {
 
 Board.is_solved = function() {
 
-	let i = 0
-	let j = 0
+	let i = seed.start[0]
+	let j = seed.start[1]
 
 	let ways = [[-1, 0], [0, 1], [1, 0], [0, -1]]
 
@@ -104,8 +120,9 @@ Board.is_solved = function() {
 
 	let figure = Board.array[i][j]
 	let bridge = figure.rotate(figure.rotation_id)
-
 	let from = bridge.indexOf(1)
+
+	console.log(from)
 
 	figure.set_visited(true)
 
@@ -131,8 +148,6 @@ Board.is_solved = function() {
 			let next_figure = Board.array[index_x][index_y]
 			let next_bridge = next_figure.rotate(next_figure.rotation_id)
 
-			console.log(figure.type == Figures.node)
-
 			if (bridge[k] > 0 && bridge[k] == bridge[from] && (k != from || figure.type == Figures.node) && next_bridge[(k+2) % next_bridge.length] > 0) {
 
 				i += ways[k][0]
@@ -157,7 +172,7 @@ Board.is_solved = function() {
 
 				bridge = figure.rotate(figure.rotation_id)
 
-				if (i == Board.height - 1 && j == Board.width - 1) {
+				if (i == seed.end[0] && j == seed.end[1]) {
 					
 					is_end = true
 				}
