@@ -13,7 +13,7 @@ Table.initializate = function(width, height) {
 			if(obj_id == -1 || obj_id == Board.height || x < 1 || x > width){
 				obj_class = "border"
 			}
-			$(this).append('<td id ="'+(x-1)+'"'+' class = "'+obj_class+'"/>')
+			$(this).append('<td id ="'+ (x - 1) + '"' + ' class = "'+ obj_class +'"/>')
 		})
 	}
 
@@ -47,3 +47,9 @@ Table.draw = function(index, image, angle) {
 	cell.css("transform", angle)
 }
 
+Table.get_position = function(cell) {
+	position = {}
+	position.y = parseInt($(cell).parent().attr("id"), 10)
+	position.x = parseInt($(cell).attr("id"), 10)
+	return position
+}

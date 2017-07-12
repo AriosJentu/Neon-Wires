@@ -29,7 +29,7 @@ Board.generate = function(width = Board.width, height = Board.height) {
 		}
 	}
 
-	let seed = seeds[current_seed]
+	let seed = seeds[current_seed.get()]
 	let i = seed.start[0] - 1
 	let j = seed.start[1]
 
@@ -56,8 +56,8 @@ Board.onclick = function(x = 0, y = 0) {
 }
 
 Board.is_solved = function() {
-	let i = seeds[current_seed].start[0]
-	let j = seeds[current_seed].start[1]
+	let i = seeds[current_seed.get()].start[0]
+	let j = seeds[current_seed.get()].start[1]
 	let ways = [[-1, 0], [0, 1], [1, 0], [0, -1]]
 	let is_end = false
 	let figure = Board.array[i][j]
@@ -104,7 +104,7 @@ Board.is_solved = function() {
 				figure.set_activity(true, type_figure)
 				bridge = figure.rotate(figure.rotation_id)
 
-				if (i == seeds[current_seed].end[0] && j == seeds[current_seed].end[1]) {
+				if (i == seeds[current_seed.get()].end[0] && j == seeds[current_seed.get()].end[1]) {
 					is_end = true
 				}
 

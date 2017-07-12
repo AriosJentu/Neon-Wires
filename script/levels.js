@@ -1,5 +1,16 @@
 
-var current_seed = 0
+var current_seed = { value: 0 }
+
+current_seed.increase = function(){
+	this.value++
+	if(this.value == seeds.length){
+		this.value = 0
+	}
+}
+
+current_seed.get = function(){
+	return this.value
+}
 
 var seeds = [
 	{
@@ -14,5 +25,11 @@ var seeds = [
 		ways: 	 "221001111123332211123333322112101112",
 		start: 	 [1, 0],
 		end: 	 [7, 7]
+	},
+	{
+		figures: "32111211201211122102201211120020213110220130102100122010",
+		ways:  	 "20032110111223011122222332100000001333322333211111233333",
+		start: 	 [2, 1],
+		end: 	 [0, 7]
 	}
 ]

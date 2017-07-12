@@ -7,20 +7,17 @@ Board.draw()
 var is_end = false
 
 $(".cell").click(function() {
-	console.log("There")
 
 	if (is_end) {
 		return
 	}
+	let position = Table.get_position(this)
 
-
-	column = parseInt($(this).parent().attr("id"), 10)
-	row = parseInt($(this).attr("id"), 10)
-	if (column == -1 || column == Board.width || row == -1 || row == Board.height) {
+	if (position.x == -1 || position.x == Board.width || position.y == -1 || position.y == Board.height) {
 		return false
 	}
 
-	Board.onclick(column, row)
+	Board.onclick(position.y, position.x)
 
 	if(Board.is_solved()) {
 		setTimeout(function(){
@@ -44,7 +41,7 @@ $("#button_level").click(function(){
 	if(!is_end)
 		return
 	is_end = false
-	current_seed++
+	current_seed.increase()
 	$("#show_win").hide("slow")
 	Board.generate()
 	Board.is_solved()
@@ -57,7 +54,4 @@ $("#button_restart").click(function(){
 	Board.generate()
 	Board.is_solved()
 	Board.draw()
-	$("td").each(function(index){
-		console.log(index, this)
-	})
 })
