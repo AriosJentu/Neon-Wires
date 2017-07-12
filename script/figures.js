@@ -20,6 +20,13 @@ var Figures = {
 		top: 		"v_top.png",
 		bridge: 	[1, 2, 1, 2],
 		rotates: 	2
+	},
+
+	node: {
+		unvisited:  "u_node.png",
+		visited: 	"v_node.png",
+		bridge: 	[0, 0, 1, 0],
+		rotates: 	4
 	}
 }
 

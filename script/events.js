@@ -1,5 +1,8 @@
 Board.generate()
+
+Board.is_solved()
 Board.draw()
+
 
 var is_end = false
 
@@ -28,7 +31,7 @@ $(".cell").click(function() {
 
 		}, 200)
 	}
-	
+
 	Board.draw()
 
 
