@@ -7,9 +7,20 @@
 		<title>Electrical Wire</title>
 	</head>
 	<body>
-		<table id = "game_board"></table>
-		<script type = "text/javascript" src = "script/figures.js"></script>
-		<script type = "text/javascript" src = "script/board.js"></script>
-		<script type = "text/javascript" src = "script/events.js"></script>
+			<div id = "show_win"> Congratulations!
+				<br> <br><button id = "button_level"> Next</button>
+
+			</div>
+			<div id = "game_container">
+				<table id = "game_board"></table>
+				<div id = "menu_container">
+					<button id = "button_restart" class = "button"> Restart</button>
+					<button id = "button_level" class = "button"> Level </button>
+				</div>
+				<script type = "text/javascript" src = "script/levels.js"></script>
+				<script type = "text/javascript" src = "script/figures.js"></script>
+				<script type = "text/javascript" src = "script/board.js"></script>
+				<script type = "text/javascript" src = "script/events.js"></script>
+			</div>
 	</body>
 </html>
