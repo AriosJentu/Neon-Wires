@@ -10,7 +10,7 @@ var random = function (min, max) {
 
 Board.generate = function(width=Board.width, height=Board.height) {
 
-	let seed_figures = "0011010222112210102112020121011110010";
+	let seed_figures = "3011010222112210102112020121011110013";
 	let seed_ways    = "2221001111123332211123333322112101112";
 	
 	Board.width = width
@@ -38,7 +38,7 @@ Board.generate = function(width=Board.width, height=Board.height) {
 
 	Board.array = []
 	
-	let figures = [Figures.line, Figures.angle, Figures.cross]
+	let figures = [Figures.line, Figures.angle, Figures.cross, Figures.node]
 
 	for (let x = 0; x < width; x++) {
 		
@@ -48,7 +48,7 @@ Board.generate = function(width=Board.width, height=Board.height) {
 
 			//SSID Generator
 
-			let figure = figures[random(0, figures.length)]
+			let figure = figures[random(0, figures.length - 1)]
 			Board.array[x][y] = new Figure(figure)
 			Board.array[x][y].rotation_id = random(0, figure.rotates)
 
@@ -98,17 +98,14 @@ Board.is_solved = function() {
 	let i = 0
 	let j = 0
 
+	let ways = [[-1, 0], [0, 1], [1, 0], [0, -1]]
+
 	let is_end = false
-	let from = 0
 
 	let figure = Board.array[i][j]
 	let bridge = figure.rotate(figure.rotation_id)
 
-	if (!bridge[0]) {
-		return false
-	} 
-
-	let ways = [[-1, 0], [0, 1], [1, 0], [0, -1]]
+	let from = bridge.indexOf(1)
 
 	figure.set_visited(true)
 
@@ -133,7 +130,10 @@ Board.is_solved = function() {
 
 			let next_figure = Board.array[index_x][index_y]
 			let next_bridge = next_figure.rotate(next_figure.rotation_id)
-			if (bridge[k] > 0 && bridge[k] == bridge[from] && k != from && next_bridge[(k+2) % next_bridge.length] > 0) {
+
+			console.log(figure.type == Figures.node)
+
+			if (bridge[k] > 0 && bridge[k] == bridge[from] && (k != from || figure.type == Figures.node) && next_bridge[(k+2) % next_bridge.length] > 0) {
 
 				i += ways[k][0]
 				j += ways[k][1]
@@ -157,7 +157,7 @@ Board.is_solved = function() {
 
 				bridge = figure.rotate(figure.rotation_id)
 
-				if (i == Board.height - 1 && j == Board.width - 1 && bridge[2] && bridge[2] == bridge[from]) {
+				if (i == Board.height - 1 && j == Board.width - 1) {
 					
 					is_end = true
 				}
