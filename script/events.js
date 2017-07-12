@@ -1,7 +1,14 @@
 Board.generate()
 Board.draw()
 
+var is_end = false
+
 $(".cell").click(function() {
+
+	if (is_end) {
+
+		return
+	}
 
 	column = $(this).parent().attr("id")*1
 	row = $(this).attr("id")*1
@@ -13,10 +20,17 @@ $(".cell").click(function() {
 	Board.onclick(column, row)
 
 	if(Board.is_solved()) {
-		alert("You won")
-	}
 
+		setTimeout(function(){
+
+			is_end = true
+			alert("You won")
+
+		}, 200)
+	}
+	
 	Board.draw()
+
 
 	for (let i = 0; i < Board.height; i++) {
 
