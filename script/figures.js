@@ -1,7 +1,7 @@
 var Figures = {
 
 	empty: {
-		unvisited:  "empty.png",
+		unvisited:  "back.png",
 		bridge: 	[0, 0, 0, 0],
 		rotates: 	1
 	},
