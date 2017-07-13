@@ -3,17 +3,17 @@ Table = { is_initializated: false }
 
 Table.initializate = function(width, height) {
 	for (let y = 0; y < height + 2; y++) {
-		$("#game_board").append('<tr id="'+(y-1)+'">')
+		$("#game_board").append('<tr class = "tr" id="'+(y-1)+'">')
 	}
 	
 	for (let x = 0; x < width + 2; x++) {
-		$("tr").each(function(index, element){
+		$(".tr").each(function(index, element){
 			let obj_class = "cell"
 			let obj_id = $(this).attr("id")
 			if(obj_id == -1 || obj_id == Board.height || x < 1 || x > width){
 				obj_class = "border"
 			}
-			$(this).append('<td id ="'+(x-1)+'"'+' class = "'+obj_class+'"/>')
+			$(this).append('<td id ="'+ (x - 1) + '"' + ' class = "'+ obj_class +'"/>')
 		})
 	}
 
@@ -47,3 +47,24 @@ Table.draw = function(index, image, angle) {
 	cell.css("transform", angle)
 }
 
+Table.get_position = function(cell) {
+	position = {}
+	position.y = parseInt($(cell).parent().attr("id"), 10)
+	position.x = parseInt($(cell).attr("id"), 10)
+	return position
+}
+
+Levels_table = {}
+
+Levels_table.initializate = function(){
+	for(let i = 1; i <= levels.length; i++){
+		$("#level_board").append('<span class = "level" id = ' + i + '>Level ' + i + '</span')
+		if(i % 3 == 0){
+			$("#level_board").append("<br>")
+		}
+	}
+	$("#level_board").append("<br>")
+	$("#level_board").append('<span id = "close_level_board" style = "color: #ff4500">Close</span>')
+}
+
+Levels_table.initializate()

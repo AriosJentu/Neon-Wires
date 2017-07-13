@@ -1,6 +1,6 @@
 var Board = {}
-Board.width = 8
-Board.height = 8
+Board.width = 12
+Board.height = 12
 
 var random = function (min, max) {
 	return Math.floor(Math.random() * (max - min)) + min
@@ -17,30 +17,21 @@ Board.generate = function(width = Board.width, height = Board.height) {
 
 	Board.array = []
 
-	let figures = [Figures.line, Figures.corner, Figures.cross, Figures.node]
+	let figures = [Figures.empty, Figures.line, Figures.corner, Figures.cross, Figures.node]
 	let ways = [[-1, 0], [0, 1], [1, 0], [0, -1]]
 
-	for (let x = 0; x < width; x++) {
-		Board.array[x] = []
-		for (let y = 0; y < height; y++) {
-			let figure = figures[random(0, figures.length - 1)]
-			Board.array[x][y] = new Figure(figure)
-			Board.array[x][y].rotation_id = random(0, figure.rotates)
+	let level = levels[global_level.get()]
+
+	for(let i = 0; i < height; i++){
+		Board.array[i] = []
+		for(let j = 0; j < width; j++){
+			let l = i
+			let k = j
+			figure = figures[level.figures[l][j]]
+			Board.array[i][j] = new Figure(figure)
+			Board.array[i][j].rotation_id = random(0, figure.rotates)
 		}
 	}
-
-	let seed = seeds[current_seed]
-	let i = seed.start[0] - 1
-	let j = seed.start[1]
-
-	for (let k = 0; k < seed.figures.length; k++) {
-		i += ways[seed.ways[k]*1][0]
-		j += ways[seed.ways[k]*1][1]
-		let figure = figures[seed.figures[k]]
-		Board.array[i][j] = new Figure(figure)
-		Board.array[i][j].rotation_id = random(0, figure.rotates)
-	}
-
 }
 
 Board.draw = function() {
@@ -56,8 +47,8 @@ Board.onclick = function(x = 0, y = 0) {
 }
 
 Board.is_solved = function() {
-	let i = seeds[current_seed].start[0]
-	let j = seeds[current_seed].start[1]
+	let i = levels[global_level.get()].start[0]
+	let j = levels[global_level.get()].start[1]
 	let ways = [[-1, 0], [0, 1], [1, 0], [0, -1]]
 	let is_end = false
 	let figure = Board.array[i][j]
@@ -104,7 +95,7 @@ Board.is_solved = function() {
 				figure.set_activity(true, type_figure)
 				bridge = figure.rotate(figure.rotation_id)
 
-				if (i == seeds[current_seed].end[0] && j == seeds[current_seed].end[1]) {
+				if (i == levels[global_level.get()].end[0] && j == levels[global_level.get()].end[1]) {
 					is_end = true
 				}
 
@@ -119,3 +110,7 @@ Board.is_solved = function() {
 
 	return true
 }
+
+Board.generate()
+Board.is_solved()
+Board.draw()

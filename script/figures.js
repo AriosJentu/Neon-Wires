@@ -1,4 +1,11 @@
 var Figures = {
+
+	empty: {
+		unvisited:  "empty.png",
+		bridge: 	[0, 0, 0, 0],
+		rotates: 	1
+	},
+
 	line: {
 		unvisited: 	"u_line.png",
 		visited: 	"v_line.png",
@@ -30,7 +37,7 @@ var Figures = {
 	}
 }
 
-var Figure = function(type = Figures.line) {
+var Figure = function(type = Figures.empty) {
 	this.type = type
 	this.image = type.unvisited
 	this.rotation_id = 0
