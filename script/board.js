@@ -1,6 +1,6 @@
 var Board = {}
-Board.width = 8
-Board.height = 8
+Board.width = 12
+Board.height = 12
 
 var random = function (min, max) {
 	return Math.floor(Math.random() * (max - min)) + min
@@ -17,9 +17,10 @@ Board.generate = function(width = Board.width, height = Board.height) {
 
 	Board.array = []
 
-	let figures = [Figures.line, Figures.corner, Figures.cross, Figures.node]
+	let figures = [Figures.empty, Figures.line, Figures.corner, Figures.cross, Figures.node]
 	let ways = [[-1, 0], [0, 1], [1, 0], [0, -1]]
 
+	/*
 	for (let x = 0; x < width; x++) {
 		Board.array[x] = []
 		for (let y = 0; y < height; y++) {
@@ -28,8 +29,22 @@ Board.generate = function(width = Board.width, height = Board.height) {
 			Board.array[x][y].rotation_id = random(0, figure.rotates)
 		}
 	}
+	*/
 
 	let seed = seeds[current_seed.get()]
+
+	for(let i = 0; i < height; i++){
+		Board.array[i] = []
+		for(let j = 0; j < width; j++){
+			let l = i
+			let k = j
+			figure = figures[seed.figures[l][j]]
+			Board.array[i][j] = new Figure(figure)
+			Board.array[i][j].rotation_id = random(0, figure.rotates)
+		}
+	}
+
+	/*
 	let i = seed.start[0] - 1
 	let j = seed.start[1]
 
@@ -40,6 +55,7 @@ Board.generate = function(width = Board.width, height = Board.height) {
 		Board.array[i][j] = new Figure(figure)
 		Board.array[i][j].rotation_id = random(0, figure.rotates)
 	}
+	*/
 
 }
 

@@ -2,6 +2,7 @@ Board.generate()
 
 Board.is_solved()
 Board.draw()
+$("#game_container").css("width", $("table").css("width"))
 
 
 var is_end = false
@@ -54,4 +55,8 @@ $("#button_restart").click(function(){
 	Board.generate()
 	Board.is_solved()
 	Board.draw()
+})
+
+$(window).resize(function(){
+	$("#game_container").css("width", $("table").css("width"))
 })
