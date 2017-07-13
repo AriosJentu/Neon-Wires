@@ -6,8 +6,6 @@ table {
     background-image: url("../img/back.png");
     min-width: 600px;
     min-height: 600px;
-    
-
 
 }
 td, tr {
@@ -21,12 +19,9 @@ td, tr {
 
 }
 
-
-
 .border {
 	background-image: url("../img/border.png");
 }
-
 
 body {
 
@@ -44,12 +39,12 @@ body {
 	margin: 0 auto;
 	margin-top: 100px;
 	padding: 50px;
-	background-image: url("../img/game_container_background.jpg");
+	background-color: #0c141f;
 	background-size: 1100px;
 	z-index: 3;
 	border: 5px solid orange;
 	border-radius: 20px;
-
+	padding-bottom: 100px;
 }
 
 #menu_container {
@@ -95,6 +90,7 @@ button {
     margin-left: -8%;
 
 }
+
 #show_win {
 	display: none;	
 	border: 5px solid orange;
