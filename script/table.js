@@ -8,7 +8,6 @@ Table.initializate = function(width, height) {
 		$("td.border_corner").remove()
 		$("tr.tr").remove()
 	}
-
 	for (let y = 0; y < height + 2; y++) {
 		$("#game_board").append('<tr class = "tr" id="'+(y-1)+'">')
 	}
@@ -42,6 +41,7 @@ Table.initializate = function(width, height) {
 			$(this).css("transform", "rotate(180deg)")
 		} 
 	})
+
 	Table.is_initializated = true
 }
 
@@ -64,13 +64,13 @@ Levels_table = {}
 
 Levels_table.initializate = function(){
 	for(let i = 1; i <= levels.length; i++){
-		$("#level_board").append('<span class = "level" id = ' + i + '>Level ' + i + '</span')
+		$("#level_board").append('<span class = "level" id = ' + i + '>Level ' + i + '</span>')
 		if(i % 3 == 0){
 			$("#level_board").append("<br>")
 		}
 	}
 	$("#level_board").append("<br>")
+	$("#level_board").append('<span class = "random_level" style = "cursor: pointer">Generate random</span>')
+	$("#level_board").append("<br>")
 	$("#level_board").append('<span id = "close_level_board" style = "color: #ff4500">Close</span>')
-}
-
-Levels_table.initializate()
+}()

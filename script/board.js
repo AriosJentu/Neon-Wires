@@ -1,23 +1,24 @@
 var Board = {}
+Board.width = 12
+Board.height = 12
 
 var random = function (min, max) {
 	return Math.floor(Math.random() * (max - min)) + min
 }
 
-Board.generate = function(width, height) {
-
-	let level = levels[global_level.get()]
-
-	width = level.figures.length
-	height = level.figures[0].length
+Board.generate = function(width = Board.width, height = Board.height) {
+	
 	Board.width = width
 	Board.height = height
+
 	Table.initializate(width, height)
 
 	Board.array = []
 
 	let figures = [Figures.empty, Figures.line, Figures.corner, Figures.cross, Figures.node]
 	let ways = [[-1, 0], [0, 1], [1, 0], [0, -1]]
+
+	let level = levels[global_level.get()]
 
 	for(let i = 0; i < height; i++){
 		Board.array[i] = []
@@ -26,9 +27,34 @@ Board.generate = function(width, height) {
 			let k = j
 			figure = figures[level.figures[l][j]]
 			Board.array[i][j] = new Figure(figure)
-			Board.array[i][j].rotation_id = random(0, figure.rotates)
+			Board.array[l][k].rotate(random(0, figure.rotates))
 		}
 	}
+}
+
+Board.random_generate = function(){
+	board = Generator.get_board()
+	Board.width = board.length
+	Board.height = board.length
+	Table.initializate(Board.width, Board.height)
+	let figures = [Figures.empty, Figures.line, Figures.corner, Figures.cross, Figures.node]
+	Board.array = []
+	for(let i = 0; i < Board.height; i++){
+		Board.array[i] = []
+		for(let j = 0; j < Board.width; j++){
+			let l = i
+			let k = j
+			if(board[l][k]){
+				Board.array[l][k] = new Figure(figures[board[l][k]])
+				Board.array[l][k].rotate(random(0, figures[board[l][k]].rotates))
+			} else {
+				figure = figures[random(0, figures.length - 1)]
+				Board.array[l][k] = new Figure(figure)
+				Board.array[l][k].rotate(random(0, figure.rotates))
+			}
+		}
+	}
+	global_level.push(board)
 }
 
 Board.draw = function() {
