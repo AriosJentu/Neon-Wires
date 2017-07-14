@@ -48,7 +48,9 @@ Board.random_generate = function(){
 				Board.array[l][k] = new Figure(figures[board[l][k]])
 				Board.array[l][k].rotate(random(0, figures[board[l][k]].rotates))
 			} else {
-				figure = figures[random(0, figures.length - 1)]
+				let index = random(0, figures.length - 1)
+				board[l][k] = index
+				figure = figures[index]
 				Board.array[l][k] = new Figure(figure)
 				Board.array[l][k].rotate(random(0, figure.rotates))
 			}
