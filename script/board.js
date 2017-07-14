@@ -1,26 +1,23 @@
 var Board = {}
-Board.width = 12
-Board.height = 12
 
 var random = function (min, max) {
 	return Math.floor(Math.random() * (max - min)) + min
 }
 
-Board.generate = function(width = Board.width, height = Board.height) {
-	
+Board.generate = function(width, height) {
+
+	let level = levels[global_level.get()]
+
+	width = level.figures.length
+	height = level.figures[0].length
 	Board.width = width
 	Board.height = height
-
-	if(!Table.is_initializated){
-		Table.initializate(width, height)
-	}
+	Table.initializate(width, height)
 
 	Board.array = []
 
 	let figures = [Figures.empty, Figures.line, Figures.corner, Figures.cross, Figures.node]
 	let ways = [[-1, 0], [0, 1], [1, 0], [0, -1]]
-
-	let level = levels[global_level.get()]
 
 	for(let i = 0; i < height; i++){
 		Board.array[i] = []

@@ -1,21 +1,21 @@
-
-$("#game_container").css("width", $("#game_board").css("width"))
-$("#win_container").css("width", $("#game_board").css("width"))
-$("#win_container").css("height", $(".cell").css("height"))
-$("#level_board").css("width", $("#game_board").css("width"))
+var resize = function(){
+	$("#game_container").css("width", $("#game_board").css("width"))
+	$("#win_container").css("width", $("#game_board").css("width"))
+	$("#win_container").css("height", $(".cell").css("height"))
+	$("#level_board").css("width", $("#game_board").css("width"))
+}()
 
 var is_end = false
 
 var rotations = 0
 
-$(".cell").click(function() {
-
+var cell_click = function(cell){
 	if (is_end) {
 		return
 	}
 
 	$("#rotation_value").text(++rotations)
-	let position = Table.get_position(this)
+	let position = Table.get_position(cell)
 
 	if (position.x == -1 || position.x == Board.width || position.y == -1 || position.y == Board.height) {
 		return false
@@ -38,6 +38,10 @@ $(".cell").click(function() {
 			Board.array[i][j].set_activity(false)
 		}
 	}
+}
+
+$("body").on("click", ".cell", function(){
+	cell_click(this)
 })
 
 $("#restart").click(function(){
@@ -52,7 +56,7 @@ $("#restart").click(function(){
 })
 
 $("#next").click(function(){
-	if(!is_end){
+	if(!is_end || global_level.get_max() > global_level.get()){
 		return;
 	}
 	rotations = 0
@@ -64,9 +68,12 @@ $("#next").click(function(){
 	if(Board.is_solved())
 		$("#win_container").slideToggle("slow", function() {});
 	Board.draw()
-	$("#next").css("color", "gray")
-
-
+	if(global_level.get_max() == global_level.get()){
+		$("#next").css("color", "gray")
+	} else {
+		$("#next").css("color", "orange")
+	}
+	resize()
 })
 
 $(window).resize(function(){
@@ -121,8 +128,6 @@ $("#level_text").mouseout(function(){
 
 $(".level").click(function(){
 	let level = parseInt($(this).attr("id"), 10)
-	console.log(level)
-	console.log(global_level.get_max())
 	if(level > global_level.get_max() + 1)
 		return
 	$("#level_board").slideToggle("slow", function() {})

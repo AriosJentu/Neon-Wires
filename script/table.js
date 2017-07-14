@@ -2,6 +2,13 @@
 Table = { is_initializated: false }
 
 Table.initializate = function(width, height) {
+	if(Table.is_initializated){
+		$("td.cell").remove()
+		$("td.border").remove()
+		$("td.border_corner").remove()
+		$("tr.tr").remove()
+	}
+
 	for (let y = 0; y < height + 2; y++) {
 		$("#game_board").append('<tr class = "tr" id="'+(y-1)+'">')
 	}
@@ -35,7 +42,6 @@ Table.initializate = function(width, height) {
 			$(this).css("transform", "rotate(180deg)")
 		} 
 	})
-
 	Table.is_initializated = true
 }
 
