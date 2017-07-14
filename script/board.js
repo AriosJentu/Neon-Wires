@@ -27,7 +27,7 @@ Board.generate = function(width = Board.width, height = Board.height) {
 			let k = j
 			figure = figures[level.figures[l][j]]
 			Board.array[i][j] = new Figure(figure)
-			Board.array[l][k].rotate(random(0, figure.rotates))
+			Board.array[i][j].rotate(random(0, figure.rotates))
 		}
 	}
 }

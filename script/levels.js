@@ -37,6 +37,10 @@ global_level.get_max = function(){
 	return this.max
 }
 
+global_level.get_last = function(){
+	return levels.length - 1
+}
+
 global_level.set = function(value){
 	this.value = value
 }

@@ -59,15 +59,20 @@ $("#next").click(function() {
 	if(!is_end){
 		return;
 	}
-	rotations = 0
-	$("#rotation_value").text(rotations)
-	is_end = false
-	global_level.increase()
-	$("#level_value").text(global_level.get() + 1)
-	Board.generate()
+	if(global_level.get() == global_level.get_last()){
+		Board.random_generate()
+		$("#level_value").text("Rand")
+	} else {
+		global_level.increase()
+		Board.generate()
+		$("#level_value").text(global_level.get() + 1)
+	}
 	if(Board.is_solved())
 		$("#win_container").slideToggle("slow", function() {});
 	Board.draw()
+	rotations = 0
+	$("#rotation_value").text(rotations)
+	is_end = false
 	$("#next").css("color", "gray")
 	$(window).resize()
 })
@@ -78,6 +83,7 @@ $(".random_level").click(function(){
 	Board.is_solved()
 	Board.draw()
 	$(window).resize()
+	$("#level_board").slideToggle("slow", function() {})
 	$("#level_value").text("Rand")
 })
 
@@ -133,8 +139,6 @@ $("#level_text").mouseout(function() {
 
 $(".level").click(function() {
 	let level = parseInt($(this).attr("id"), 10)
-	console.log(level)
-	console.log(global_level.get_max())
 	if(level > global_level.get_max() + 1)
 		return
 	$("#level_board").slideToggle("slow", function() {})
