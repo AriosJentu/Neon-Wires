@@ -1,6 +1,6 @@
 body {
 	background-position: center;
-	background-image: url("../img/background.jpg");
+	background-image: url("../img/background.png");
 	background-attachment: fixed;
 	background-size: cover;
 }
@@ -81,14 +81,18 @@ td, tr {
 	width: 100%;
 	text-align: center;
 	border-bottom: 5px solid orange;
+	
 }
 
 #restart {
 	width: 20%;
+	cursor: pointer;
+
 }
 
 #next, #level_text {
 	width: 15%;
+	cursor: pointer;
 }
 
 #level_text, #rotation_text {
@@ -110,4 +114,12 @@ td, tr {
 
 span {
 	margin: 20px;
+}
+
+.level{
+	cursor: pointer;
+}
+
+#close_level_board{
+	cursor: pointer;
 }
