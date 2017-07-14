@@ -64,7 +64,7 @@ Levels_table = {}
 
 Levels_table.initializate = function(){
 	for(let i = 1; i <= levels.length; i++){
-		$("#level_board").append('<span class = "level" id = ' + i + '>Level ' + i + '</span>')
+		$("#level_board").append('<span style = "cursor: pointer" class = "level" id = ' + i + '>Level ' + i + '</span>')
 		if(i % 3 == 0){
 			$("#level_board").append("<br>")
 		}
@@ -72,5 +72,5 @@ Levels_table.initializate = function(){
 	$("#level_board").append("<br>")
 	$("#level_board").append('<span class = "random_level" style = "cursor: pointer">Generate random</span>')
 	$("#level_board").append("<br>")
-	$("#level_board").append('<span id = "close_level_board" style = "color: #ff4500">Close</span>')
+	$("#level_board").append('<span id = "close_level_board" style = "cursor: pointer; color: #ff4500">Close</span>')
 }()
