@@ -1,6 +1,9 @@
 
 var resize = function(){
 	$("#game_container").css("width", $("#game_board").css("width"))
+	let height = $("#game_board").css("height")
+	height = height.slice(0, height.length - 2)
+	$("#game_container").css("padding-bottom", height - 720)
 	$("#win_container").css("width", $("#game_board").css("width"))
 	$("#win_container").css("height", $(".cell").css("height"))
 	$("#level_board").css("width", $("#game_board").css("width"))
