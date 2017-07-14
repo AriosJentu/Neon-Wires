@@ -82,6 +82,7 @@ $(".random_level").click(function(){
 	Board.random_generate()
 	Board.is_solved()
 	Board.draw()
+	rotations = 0
 	$(window).resize()
 	$("#level_board").slideToggle("slow", function() {})
 	$("#level_value").text("Rand")
