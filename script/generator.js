@@ -7,7 +7,7 @@ var random = function (min, max) {
 var Generator = {}
 
 Generator.set_size = function(){
-	let rand = random(8, 15)
+	let rand = random(10, 15)
 	this.size = rand
 	this.found = false
 }
