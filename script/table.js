@@ -64,7 +64,7 @@ Levels_table = {}
 
 Levels_table.initializate = function(){
 	for(let i = 1; i <= levels.length; i++){
-		$("#level_board").append('<span style = "cursor: pointer" class = "level" id = ' + i + '>Level ' + i + '</span>')
+		$("#level_board").append('<span class = "level" id = ' + i + ' style = "cursor: pointer">Level ' + i + '</span>')
 		if(i % 3 == 0){
 			$("#level_board").append("<br>")
 		}
